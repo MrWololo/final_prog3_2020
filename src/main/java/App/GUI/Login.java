@@ -10,16 +10,17 @@ public class Login extends JFrame {
 
     private static final long serialVersionUID = 6014867817271271729L;
 
-    JPanel panel;
-    JLabel userLabel;
-    JTextField userField;
-    JLabel passwordLabel;
-    JPasswordField passwordField;
+    private JPanel panel;
+    private JLabel userLabel;
+    private JTextField userField;
+    private JLabel passwordLabel;
+    private JPasswordField passwordField;
 
     public Login() {
 
         panel = new JPanel();
         panel.setLayout(null);
+        setLocationRelativeTo(null);
 
         add(panel);
 
