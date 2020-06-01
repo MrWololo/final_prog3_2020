@@ -1,5 +1,6 @@
 package App.GUI;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,6 +16,9 @@ public class Login extends JFrame {
     private JTextField userField;
     private JLabel passwordLabel;
     private JPasswordField passwordField;
+    private JButton botonLogin;
+    private JLabel exceptionLabel;
+    private JButton botonVolver;
 
     public Login() {
 
@@ -37,6 +41,26 @@ public class Login extends JFrame {
         passwordField = new JPasswordField();
         passwordField.setBounds(100, 60, 165, 25);
         panel.add(passwordField);
+
+        botonLogin = new JButton("LogIn");
+        botonLogin.setBounds(10, 100, 80, 25);
+        panel.add(botonLogin);
+
+        exceptionLabel = new JLabel("");
+        exceptionLabel.setBounds(150, 320, 400, 25);
+        panel.add(exceptionLabel);
+
+        botonVolver = new JButton("Volver");
+        botonVolver.setBounds(10, 130, 80, 25);
+        panel.add(botonVolver);
+        botonVolver.addActionListener(actionEvent -> {
+            dispose();
+            new MainMenu().setVisible(true);
+        });
+
+        botonLogin.addActionListener(actionEvent -> {
+            
+        });
 
         setSize(350, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
