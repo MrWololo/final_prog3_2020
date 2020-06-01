@@ -116,7 +116,7 @@ public class Register extends JFrame {
                     data.put("nombre", nombreField.getText());
                     data.put("apellido", apellidoField.getText());
                     data.put("username", userField.getText());
-                    data.put("contraseña", passwordField.getPassword().toString());
+                    data.put("contraseña", new String(passwordField.getPassword()));
                     try {
                         Integer.parseInt(dniField.getText());
                         data.put("dni", dniField.getText());

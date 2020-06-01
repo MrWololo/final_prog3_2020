@@ -1,11 +1,16 @@
 package App.GUI;
 
+import java.awt.Color;
+import java.util.Map;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import App.BackEnd.LocalData;
 
 public class Login extends JFrame {
 
@@ -47,7 +52,7 @@ public class Login extends JFrame {
         panel.add(botonLogin);
 
         exceptionLabel = new JLabel("");
-        exceptionLabel.setBounds(150, 320, 400, 25);
+        exceptionLabel.setBounds(120, 100, 400, 25);
         panel.add(exceptionLabel);
 
         botonVolver = new JButton("Volver");
@@ -59,7 +64,35 @@ public class Login extends JFrame {
         });
 
         botonLogin.addActionListener(actionEvent -> {
-            
+            try {
+                if (userField.getText().isEmpty() || passwordField.getPassword().length == 0) {
+                    throw new Exception("Datos Incompletos");
+                } else {
+                    if (LocalData.getUsers().isEmpty()) {
+                        throw new Exception("No existen Usuarios");
+                    } else {
+                        for (Map<String, String> map : LocalData.getUsers()) {
+                            if (map.get("username").equals(userField.getText())) {
+                                if (map.get("contraseña").equals(new String(passwordField.getPassword()))) {
+                                    LocalData.setCurrentUser(map);
+
+                                    exceptionLabel.setText("Yes");
+
+                                } else {
+                                    throw new Exception("Contraseña incorrecta");
+                                }
+                            } else {
+                                throw new Exception("El usuario no existe");
+                            }
+                        }
+                    }
+
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                exceptionLabel.setText(e.getMessage());
+                exceptionLabel.setForeground(Color.RED);
+            }
         });
 
         setSize(350, 200);
