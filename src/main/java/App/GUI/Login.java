@@ -76,7 +76,8 @@ public class Login extends JFrame {
                                 if (map.get("contraseña").equals(new String(passwordField.getPassword()))) {
                                     LocalData.setCurrentUser(map);
 
-                                    exceptionLabel.setText("Yes");
+                                    dispose();
+                                    new HomePage().setVisible(true);
 
                                 } else {
                                     throw new Exception("Contraseña incorrecta");
@@ -89,7 +90,7 @@ public class Login extends JFrame {
 
                 }
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                e.printStackTrace();
                 exceptionLabel.setText(e.getMessage());
                 exceptionLabel.setForeground(Color.RED);
             }
