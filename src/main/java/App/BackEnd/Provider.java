@@ -1,34 +1,36 @@
 package App.BackEnd;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import App.Data.Avion;
+import App.Data.Viaje;
 
-public abstract class LocalData {
+
+public abstract class Provider {
     private static Map<String, String> currentUser = new HashMap<String, String>();
     private static ArrayList<Map<String, String>> users = new ArrayList<Map<String, String>>();
 
+    private static ArrayList<Viaje> viajesContratados = new ArrayList<Viaje>();
+
     public static Map<String, String> getCurrentUser() {
-        return LocalData.currentUser;
+        return Provider.currentUser;
     }
 
     public static void setCurrentUser(Map<String, String> currentUser) {
-        LocalData.currentUser = currentUser;
+        Provider.currentUser = currentUser;
     }
 
     public static ArrayList<Map<String, String>> getUsers() {
-        return LocalData.users;
+        return Provider.users;
     }
 
     public static void setUsers(ArrayList<Map<String, String>> users) {
-        LocalData.users = users;
+        Provider.users = users;
     }
 
     public static void addToUsers(Map<String, String> map) {
-        LocalData.users.add(map);
+        Provider.users.add(map);
     }
 
     public static boolean userExists(Map<String, String> map) {

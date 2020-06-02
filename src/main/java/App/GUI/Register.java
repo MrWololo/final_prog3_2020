@@ -8,19 +8,16 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import App.BackEnd.LocalData;
+import App.BackEnd.Provider;
 import App.BackEnd.Storage;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Register extends JFrame {
+public class Register extends JPanel {
 
     private static final long serialVersionUID = -8793673541319825986L;
-
-    private JPanel panel;
 
     private JLabel nombreLabel;
     private JTextField nombreField;
@@ -40,69 +37,66 @@ public class Register extends JFrame {
 
     private JButton botonVolver;
 
-    public Register() {
-        panel = new JPanel();
-        panel.setLayout(null);
-        setLocationRelativeTo(null);
-
-        add(panel, BorderLayout.CENTER);
+    public Register(final JFrame frame, final JPanel previousJPanel) {
+        setLayout(null);
 
         nombreLabel = new JLabel("Nombre");
         nombreLabel.setBounds(15, 20, 80, 25);
-        panel.add(nombreLabel);
+        add(nombreLabel);
         nombreField = new JTextField();
         nombreField.setBounds(15, 40, 165, 25);
-        panel.add(nombreField);
+        add(nombreField);
 
         apellidoLabel = new JLabel("Apellido");
         apellidoLabel.setBounds(195, 20, 80, 25);
-        panel.add(apellidoLabel);
+        add(apellidoLabel);
         apellidoField = new JTextField();
         apellidoField.setBounds(195, 40, 165, 25);
-        panel.add(apellidoField);
+        add(apellidoField);
 
         dniLabel = new JLabel("DNI");
         dniLabel.setBounds(15, 80, 80, 25);
-        panel.add(dniLabel);
+        add(dniLabel);
         dniField = new JTextField();
         dniField.setBounds(15, 100, 345, 25);
-        panel.add(dniField);
+        add(dniField);
 
         edadLabel = new JLabel("Edad");
         edadLabel.setBounds(15, 140, 80, 25);
-        panel.add(edadLabel);
+        add(edadLabel);
         edadField = new JFormattedTextField();
         edadField.setBounds(15, 160, 345, 25);
-        panel.add(edadField);
+        add(edadField);
 
         userLabel = new JLabel("Usuario");
         userLabel.setBounds(15, 200, 80, 25);
-        panel.add(userLabel);
+        add(userLabel);
         userField = new JTextField();
         userField.setBounds(15, 220, 345, 25);
-        panel.add(userField);
+        add(userField);
 
         passwordLabel = new JLabel("Contraseña");
         passwordLabel.setBounds(15, 260, 80, 25);
-        panel.add(passwordLabel);
+        add(passwordLabel);
         passwordField = new JPasswordField();
         passwordField.setBounds(15, 280, 345, 25);
-        panel.add(passwordField);
+        add(passwordField);
 
         botonRegistro = new JButton("Finalizar");
         botonRegistro.setBounds(15, 320, 100, 25);
-        panel.add(botonRegistro);
+        add(botonRegistro);
 
         exceptionLabel = new JLabel("");
         exceptionLabel.setBounds(150, 320, 400, 25);
-        panel.add(exceptionLabel);
+        add(exceptionLabel);
 
         botonVolver = new JButton("Volver");
         botonVolver.setBounds(15, 350, 100, 25);
-        panel.add(botonVolver);
+        add(botonVolver);
         botonVolver.addActionListener(actionEvent -> {
-            dispose();
-            new MainMenu().setVisible(true);
+            frame.setSize(800, 600);
+            frame.setContentPane(previousJPanel);
+            frame.revalidate();
         });
 
         botonRegistro.addActionListener(actionEvent -> {
@@ -124,11 +118,11 @@ public class Register extends JFrame {
                             Integer.parseInt(edadField.getText());
                             data.put("edad", edadField.getText());
 
-                            if (LocalData.userExists(data)) {
+                            if (Provider.userExists(data)) {
                                 throw new Exception("El nombre de usuario ya existe");
                             } else {
-                                LocalData.addToUsers(data);
-                                Storage.guardarRegistro(LocalData.getUsers());
+                                Provider.addToUsers(data);
+                                Storage.guardarRegistro(Provider.getUsers());
 
                                 exceptionLabel.setText("Registrado");
                                 exceptionLabel.setForeground(Color.GREEN);
@@ -155,8 +149,9 @@ public class Register extends JFrame {
 
         });
 
-        setSize(400, 450);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 450);
+        // frame.pack();
+        // setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     }
 

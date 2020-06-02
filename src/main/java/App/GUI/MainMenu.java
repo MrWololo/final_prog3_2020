@@ -1,6 +1,7 @@
 package App.GUI;
 
 import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -18,8 +19,8 @@ public class MainMenu extends JFrame {
 
     private static final long serialVersionUID = -5252222442637822026L;
 
-    private JFrame loginFrame = new Login();
-    private JFrame registerFrame = new Register();
+    // private JFrame loginFrame = new Login();
+    // private JPanel registerPanel = new Register();
 
     private BufferedImage image;
     private JLabel label;
@@ -28,6 +29,11 @@ public class MainMenu extends JFrame {
     private JPanel panel;
 
     public MainMenu() {
+
+        panel = new JPanel();
+        panel.setBorder(BorderFactory.createEmptyBorder(100, 100, 30, 100));
+        panel.setLayout(null);
+        getContentPane().add(panel);
 
         try {
             image = ImageIO.read(new File("src/main/java/App/GUI/assets/logo.png"));
@@ -38,19 +44,14 @@ public class MainMenu extends JFrame {
 
         loginButton = new JButton("Login");
         loginButton.addActionListener(actionEvent -> {
-            dispose();
-            loginFrame.setVisible(true);
+            setContentPane(new Login(this, panel));
         });
 
         registerButton = new JButton("Registrarse");
         registerButton.addActionListener(actionEvent -> {
-            dispose();
-            registerFrame.setVisible(true);
+            setContentPane(new Register(this, panel));
+            revalidate();
         });
-
-        panel = new JPanel();
-        panel.setBorder(BorderFactory.createEmptyBorder(100, 100, 30, 100));
-        panel.setLayout(null);
 
         loginButton.setBounds(10, 470, 100, 25);
         panel.add(loginButton);

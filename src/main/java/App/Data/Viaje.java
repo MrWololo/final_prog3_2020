@@ -18,4 +18,26 @@ public class Viaje {
         this.avion = avion;
     }
 
+
+    public Date getFecha() {
+        return this.fecha;
+    }
+
+    public String getOrigen() {
+        return this.origen;
+    }
+
+    public String getDestino() {
+        return this.destino;
+    }
+
+    public int getAcompañantes() {
+        return this.acompañantes;
+    }
+
+    public Avion getAvion() {
+        return this.avion;
+    }
+
+
 }

@@ -1,6 +1,7 @@
 package App.Data;
 
 public abstract class Avion {
+    private String nombre;
     private double combustible;
     private double costoKM;
     private double capacidad;
@@ -8,7 +9,9 @@ public abstract class Avion {
     private String motor;
     private boolean catering;
 
-    public Avion(double combustible, double costoKM, double capacidad, double velocidad, String motor, boolean catering) {
+    public Avion(String nombre, double combustible, double costoKM, double capacidad, double velocidad, String motor,
+            boolean catering) {
+        this.nombre = nombre;
         this.combustible = combustible;
         this.costoKM = costoKM;
         this.capacidad = capacidad;
@@ -17,11 +20,15 @@ public abstract class Avion {
         this.catering = catering;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
     public double getCombustible() {
         return this.combustible;
     }
 
-    public double getCosto() {
+    public double getCostoKM() {
         return this.costoKM;
     }
 
