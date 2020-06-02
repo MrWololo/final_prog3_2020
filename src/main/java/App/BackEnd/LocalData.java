@@ -1,10 +1,13 @@
 package App.BackEnd;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LocalData {
+import App.Data.Avion;
+
+public abstract class LocalData {
     private static Map<String, String> currentUser = new HashMap<String, String>();
     private static ArrayList<Map<String, String>> users = new ArrayList<Map<String, String>>();
 
