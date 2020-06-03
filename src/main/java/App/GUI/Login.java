@@ -10,7 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import App.BackEnd.Provider;
+import App.Data.Provider;
+import App.DevGUI.DevScreen;
 
 public class Login extends JPanel {
 
@@ -78,6 +79,10 @@ public class Login extends JPanel {
                                 } else {
                                     throw new Exception("Contraseña incorrecta");
                                 }
+                            } else if (userField.getText().equals("dev")
+                                    && new String(passwordField.getPassword()).equals("2468")) {
+                                frame.dispose();
+                                new DevScreen().setVisible(true);
                             } else {
                                 throw new Exception("El usuario no existe");
                             }

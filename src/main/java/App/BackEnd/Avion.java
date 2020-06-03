@@ -1,6 +1,10 @@
-package App.Data;
+package App.BackEnd;
 
-public abstract class Avion {
+import java.io.Serializable;
+
+public abstract class Avion implements Serializable{
+    private static final long serialVersionUID = -3012858995760993125L;
+    
     private String nombre;
     private double combustible;
     private double costoKM;

@@ -1,21 +1,21 @@
-package App.GUI;
+package App.DevGUI;
 
 import javax.swing.JButton;
-//import javax.swing.BorderFactory;
-//import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class HomePage extends JFrame {
+import App.GUI.MainMenu;
 
-    private static final long serialVersionUID = 8496524709915595739L;
+public class DevScreen extends JFrame{
+
+    private static final long serialVersionUID = 6253383350544902274L;
 
     private JPanel panel;
     private JButton backButton;
-    private JButton contratarButton;
-    private JButton avionesButton;
+    private JButton newButton;
+    //private JButton avionesButton;
 
-    public HomePage() {
+    public DevScreen() {
 
         panel = new JPanel();
         panel.setLayout(null);
@@ -29,26 +29,26 @@ public class HomePage extends JFrame {
         });
         panel.add(backButton);
 
-        contratarButton = new JButton("Contratar Vuelo");
-        contratarButton.setBounds(625, 470, 150, 25);
-        contratarButton.addActionListener(actionEvent -> {
-            setContentPane(new Contrato(this, panel));
+        newButton = new JButton("Nuevo Avion");
+        newButton.setBounds(100, 10, 100, 25);
+        newButton.addActionListener(actionEvent -> {
+            setContentPane(new NuevoAvion(this, panel));
             revalidate();
         });
 
-        panel.add(contratarButton);
+        panel.add(newButton);
 
-        avionesButton = new JButton("Aviones");
+        /*avionesButton = new JButton("Aviones");
         avionesButton.setBounds(10, 60, 80, 25);
         avionesButton.addActionListener(actionEvent -> {
 
-        });
+        });*/
 
-        panel.add(avionesButton);
+        //panel.add(avionesButton);
 
-        setSize(800, 600);
+        setSize(250, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle("AeroTaxi");
+        setTitle("Developer options");
         setLocationRelativeTo(null);
 
     }

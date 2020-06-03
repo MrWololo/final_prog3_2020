@@ -1,8 +1,10 @@
-package App.Data.Aviones;
+package App.BackEnd.Aviones;
 
-import App.Data.Avion;
+import App.BackEnd.Avion;
 
 public class Silver extends Avion {
+
+    private static final long serialVersionUID = -5311091831120103099L;
 
     /*
      * public Silver() { super(5000, 225, 15, 850.2, "de pistones", true); }

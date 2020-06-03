@@ -1,15 +1,18 @@
-package App.BackEnd;
+package App.Data;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import App.Data.Viaje;
+import App.BackEnd.Avion;
+import App.BackEnd.Viaje;
 
 
 public abstract class Provider {
     private static Map<String, String> currentUser = new HashMap<String, String>();
     private static ArrayList<Map<String, String>> users = new ArrayList<Map<String, String>>();
+
+    private static ArrayList<Avion> aviones = new ArrayList<Avion>();
 
     private static ArrayList<Viaje> viajesContratados = new ArrayList<Viaje>();
 
@@ -31,6 +34,14 @@ public abstract class Provider {
 
     public static void addToUsers(Map<String, String> map) {
         Provider.users.add(map);
+    }
+
+    public static void addAvion(Avion avion){
+        aviones.add(avion);
+    }
+
+    public static ArrayList<Avion> getAviones() {
+        return Provider.aviones;
     }
 
     public static boolean userExists(Map<String, String> map) {

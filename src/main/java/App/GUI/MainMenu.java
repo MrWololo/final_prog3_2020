@@ -1,7 +1,6 @@
 package App.GUI;
 
 import java.awt.BorderLayout;
-import java.awt.Container;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -37,7 +36,7 @@ public class MainMenu extends JFrame {
 
         try {
             image = ImageIO.read(new File("src/main/java/App/GUI/assets/logo.png"));
-            label = new JLabel(new ImageIcon(image.getScaledInstance(800, 600, Image.SCALE_FAST)));
+            label = new JLabel(new ImageIcon(image.getScaledInstance(800, 600, Image.SCALE_AREA_AVERAGING)));
         } catch (IOException e) {
             e.printStackTrace();
         }

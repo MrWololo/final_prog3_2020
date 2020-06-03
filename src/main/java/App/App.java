@@ -2,8 +2,8 @@ package App;
 
 import com.alee.laf.WebLookAndFeel;
 
-import App.BackEnd.Provider;
-import App.BackEnd.Storage;
+import App.Data.Provider;
+import App.Data.Storage;
 import App.GUI.MainMenu;
 
 public class App {

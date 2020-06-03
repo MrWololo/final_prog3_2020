@@ -8,8 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import App.BackEnd.Provider;
-import App.BackEnd.Storage;
+import App.Data.Provider;
+import App.Data.Storage;
 
 import java.awt.Color;
 import java.util.HashMap;

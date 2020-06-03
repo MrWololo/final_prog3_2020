@@ -1,9 +1,11 @@
-package App.Data.Aviones;
+package App.BackEnd.Aviones;
 
-import App.Data.Avion;
+import App.BackEnd.Avion;
 
 public class Gold extends Avion {
 
+    private static final long serialVersionUID = -3583224515901391116L;
+    
     private boolean wifi;
 
     /*public Gold(boolean wifi) {
