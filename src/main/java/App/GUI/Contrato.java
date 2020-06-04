@@ -7,6 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -63,7 +65,7 @@ public class Contrato extends JPanel {
 
         pasajerosLabel = new JLabel("Pasajeros");
         add(pasajerosLabel, "gapleft 10, gaptop 10, cell 0 2, grow");
-        pasajerosField = new JSpinner();
+        pasajerosField = new JSpinner(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
         add(pasajerosField, "gapleft 10, cell 0 3, grow");
 
         origenLabel = new JLabel("Origen");

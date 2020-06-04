@@ -71,22 +71,22 @@ public class NuevoAvion extends JPanel {
 
         combustibleLabel = new JLabel("Combustible: ");
         add(combustibleLabel, "gapleft 10");
-        combustibleField = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
+        combustibleField = new JSpinner(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
         add(combustibleField, "grow, wrap");
 
         costoKMLabel = new JLabel("Costo por KM: ");
         add(costoKMLabel, "gapleft 10");
-        costoKMField = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
+        costoKMField = new JSpinner(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
         add(costoKMField, "grow, wrap");
 
         capacidadLabel = new JLabel("Capacidad: ");
         add(capacidadLabel, "gapleft 10");
-        capacidadField = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
+        capacidadField = new JSpinner(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
         add(capacidadField, "grow, wrap");
 
         velocidadLabel = new JLabel("Velocidad Maxima: ");
         add(velocidadLabel, "gapleft 10");
-        velocidadField = new JSpinner(new SpinnerNumberModel(0, 0, 100, 1));
+        velocidadField = new JSpinner(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
         add(velocidadField, "grow, wrap");
 
         motorLabel = new JLabel("Tipo de motor: ");
@@ -106,40 +106,45 @@ public class NuevoAvion extends JPanel {
                             && Double.parseDouble(combustibleField.getValue().toString()) > 0
                             && Double.parseDouble(costoKMField.getValue().toString()) > 0
                             && Double.parseDouble(velocidadField.getValue().toString()) > 0) {
-                        switch (tipoDeAvionSeleccionado) {
-                            case "Gold":
-                                Provider.addAvion(new Gold(nombreAvionField.getText(),
-                                        (double) (Integer) combustibleField.getValue(),
-                                        (double) (Integer) costoKMField.getValue(),
-                                        (double) (Integer) capacidadField.getValue(),
-                                        (double) (Integer) velocidadField.getValue(), tipoDeMotorSeleccionado,
-                                        random.nextBoolean()));
 
-                                System.out.println(Provider.getAviones());
-                                exceptionLabel.setText("Avion Gold agregado");
-                                break;
-                            case "Silver":
-                                Provider.addAvion(new Silver(nombreAvionField.getText(),
-                                        (double) (Integer) combustibleField.getValue(),
-                                        (double) (Integer) costoKMField.getValue(),
-                                        (double) (Integer) capacidadField.getValue(),
-                                        (double) (Integer) velocidadField.getValue(), tipoDeMotorSeleccionado));
+                        if (!Provider.getAviones().stream()
+                                .anyMatch((avion) -> avion.getNombre().equals(nombreAvionField.getText()))) {
+                            switch (tipoDeAvionSeleccionado) {
+                                case "Gold":
+                                    Provider.addAvion(new Gold(nombreAvionField.getText(),
+                                            (double) (Integer) combustibleField.getValue(),
+                                            (double) (Integer) costoKMField.getValue(),
+                                            (double) (Integer) capacidadField.getValue(),
+                                            (double) (Integer) velocidadField.getValue(), tipoDeMotorSeleccionado,
+                                            random.nextBoolean()));
 
-                                System.out.println(Provider.getAviones());
-                                exceptionLabel.setText("Avion Silver agregado");
-                                break;
+                                    System.out.println(Provider.getAviones());
+                                    exceptionLabel.setText("Avion Gold agregado");
+                                    break;
+                                case "Silver":
+                                    Provider.addAvion(new Silver(nombreAvionField.getText(),
+                                            (double) (Integer) combustibleField.getValue(),
+                                            (double) (Integer) costoKMField.getValue(),
+                                            (double) (Integer) capacidadField.getValue(),
+                                            (double) (Integer) velocidadField.getValue(), tipoDeMotorSeleccionado));
 
-                            case "Bronze":
-                                Provider.addAvion(new Bronze(nombreAvionField.getText(),
-                                        (double) (Integer) combustibleField.getValue(),
-                                        (double) (Integer) costoKMField.getValue(),
-                                        (double) (Integer) capacidadField.getValue(),
-                                        (double) (Integer) velocidadField.getValue(), tipoDeMotorSeleccionado));
+                                    System.out.println(Provider.getAviones());
+                                    exceptionLabel.setText("Avion Silver agregado");
+                                    break;
 
-                                System.out.println(Provider.getAviones());
-                                exceptionLabel.setText("Avion Bronze agregado");
-                                break;
+                                case "Bronze":
+                                    Provider.addAvion(new Bronze(nombreAvionField.getText(),
+                                            (double) (Integer) combustibleField.getValue(),
+                                            (double) (Integer) costoKMField.getValue(),
+                                            (double) (Integer) capacidadField.getValue(),
+                                            (double) (Integer) velocidadField.getValue(), tipoDeMotorSeleccionado));
 
+                                    System.out.println(Provider.getAviones());
+                                    exceptionLabel.setText("Avion Bronze agregado");
+                                    break;
+                            }
+                        } else {
+                            throw new Exception("El avion ya existe");
                         }
 
                     } else {
