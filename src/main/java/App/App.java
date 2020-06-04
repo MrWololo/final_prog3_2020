@@ -9,9 +9,13 @@ import App.GUI.MainMenu;
 public class App {
     public static void main(String[] args) {
         WebLookAndFeel.install();
-        if (Storage.exists()) {
+        if (Storage.usersExist()) {
             Provider.processFetch(Storage.fetchRegistro());
         }
+        if (Storage.avionesExist()) {
+            Provider.setAviones(Storage.fetchAviones());
+        }
+
         new MainMenu();
     }
 }

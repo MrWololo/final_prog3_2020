@@ -9,10 +9,19 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.*;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import App.BackEnd.Avion;
+
 public class Storage {
 
-    public static boolean exists(){
+    public static boolean usersExist() {
         File file = new File("Users.txt");
+        return file.exists();
+    }
+    public static boolean avionesExist() {
+        File file = new File("Aviones.txt");
         return file.exists();
     }
 
@@ -32,6 +41,53 @@ public class Storage {
         } catch (IOException e) {
             System.out.println(e);
         }
+    }
+
+    public static void guardarAviones(ArrayList<Avion> aviones) {
+
+        try {
+            FileOutputStream f = new FileOutputStream("Aviones.txt", false);
+            ObjectOutputStream o = new ObjectOutputStream(f);
+
+            Gson gson = new Gson();
+            String avionesJson = gson.toJson(aviones);
+
+            o.writeObject(avionesJson);
+
+            o.close();
+            f.close();
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Archivo no Encontrado");
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+    }
+
+    public static ArrayList<Avion> fetchAviones() {
+
+        try {
+            FileInputStream f = new FileInputStream("Aviones.txt");
+            ObjectInputStream o = new ObjectInputStream(f);
+
+            Gson gson = new Gson();
+
+            String json = (String) o.readObject();
+            System.out.println(json);
+
+            o.close();
+            f.close();
+            return gson.fromJson(json, new TypeToken<ArrayList<Avion>>() {
+            }.getType());
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Archivo no Encontrado");
+        } catch (IOException e) {
+            System.out.println(e);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static ArrayList<Map<?, ?>> fetchRegistro() {
@@ -67,5 +123,4 @@ public class Storage {
         }
         return null;
     }
-
 }

@@ -44,6 +44,10 @@ public abstract class Provider {
         return Provider.aviones;
     }
 
+    public static void setAviones(ArrayList<Avion> aviones) {
+        Provider.aviones = aviones;
+    }
+
     public static boolean userExists(Map<String, String> map) {
         boolean match = false;
         for (Map<String, String> user : users) {

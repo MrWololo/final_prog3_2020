@@ -2,7 +2,9 @@ package App.BackEnd;
 
 import java.io.Serializable;
 
-public abstract class Avion implements Serializable{
+//Gson es la unica razon por la cual esta clase no
+//es Abstracta
+public class Avion implements Serializable{
     private static final long serialVersionUID = -3012858995760993125L;
     
     private String nombre;

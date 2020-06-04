@@ -16,6 +16,7 @@ import App.BackEnd.Aviones.Bronze;
 import App.BackEnd.Aviones.Gold;
 import App.BackEnd.Aviones.Silver;
 import App.Data.Provider;
+import App.Data.Storage;
 import net.miginfocom.swing.MigLayout;
 
 public class NuevoAvion extends JPanel {
@@ -118,6 +119,8 @@ public class NuevoAvion extends JPanel {
                                             (double) (Integer) velocidadField.getValue(), tipoDeMotorSeleccionado,
                                             random.nextBoolean()));
 
+                                    Storage.guardarAviones(Provider.getAviones());
+
                                     System.out.println(Provider.getAviones());
                                     exceptionLabel.setText("Avion Gold agregado");
                                     break;
@@ -127,6 +130,8 @@ public class NuevoAvion extends JPanel {
                                             (double) (Integer) costoKMField.getValue(),
                                             (double) (Integer) capacidadField.getValue(),
                                             (double) (Integer) velocidadField.getValue(), tipoDeMotorSeleccionado));
+
+                                    Storage.guardarAviones(Provider.getAviones());
 
                                     System.out.println(Provider.getAviones());
                                     exceptionLabel.setText("Avion Silver agregado");
@@ -139,6 +144,8 @@ public class NuevoAvion extends JPanel {
                                             (double) (Integer) capacidadField.getValue(),
                                             (double) (Integer) velocidadField.getValue(), tipoDeMotorSeleccionado));
 
+                                    Storage.guardarAviones(Provider.getAviones());
+                                    
                                     System.out.println(Provider.getAviones());
                                     exceptionLabel.setText("Avion Bronze agregado");
                                     break;
