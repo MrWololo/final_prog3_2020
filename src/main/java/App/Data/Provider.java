@@ -1,12 +1,14 @@
 package App.Data;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import App.BackEnd.Avion;
 import App.BackEnd.Viaje;
-
 
 public abstract class Provider {
     private static Map<String, String> currentUser = new HashMap<String, String>();
@@ -14,7 +16,13 @@ public abstract class Provider {
 
     private static ArrayList<Avion> aviones = new ArrayList<Avion>();
 
-    private static ArrayList<Viaje> viajesContratados = new ArrayList<Viaje>();
+    private static Map<String, Integer> distancias = Stream
+            .of(new Object[][] { { "Buenos Aires-Cordoba", 695 }, { "Buenos Aires-Santiago", 1400 },
+                    { "Buenos Aires-Montevideo", 950 }, { "Cordoba-Montevideo", 1190 }, { "Cordoba-Santiago", 1050 },
+                    { "Montevideo-Santiago", 2100 }, })
+            .collect(Collectors.toMap(data -> (String) data[0], data -> (Integer) data[1]));
+
+    private static Map<String, ArrayList<Viaje>> viajesContratados = new HashMap<String, ArrayList<Viaje>>();
 
     public static Map<String, String> getCurrentUser() {
         return Provider.currentUser;
@@ -36,7 +44,7 @@ public abstract class Provider {
         Provider.users.add(map);
     }
 
-    public static void addAvion(Avion avion){
+    public static void addAvion(Avion avion) {
         aviones.add(avion);
     }
 
@@ -46,6 +54,29 @@ public abstract class Provider {
 
     public static void setAviones(ArrayList<Avion> aviones) {
         Provider.aviones = aviones;
+    }
+
+    public static Map<String, Integer> getDistancias() {
+        return distancias;
+    }
+
+    public static void setViajes(Map<String, ArrayList<Viaje>> viajes) {
+        Provider.viajesContratados = viajes;
+    }
+
+    public static Map<String, ArrayList<Viaje>> getViajes() {
+        return Provider.viajesContratados;
+    }
+
+    public static void addViaje(Viaje viaje) {
+        if (Provider.viajesContratados.containsKey(Provider.currentUser.get("username"))) {
+            ArrayList<Viaje> viajes = Provider.viajesContratados.get(Provider.currentUser.get("username"));
+            viajes.add(viaje);
+            Provider.viajesContratados.put(Provider.currentUser.get("username"), viajes);
+        } else {
+            Provider.viajesContratados.putIfAbsent(Provider.currentUser.get("username"),
+                    new ArrayList<Viaje>(Arrays.asList(viaje)));
+        }
     }
 
     public static boolean userExists(Map<String, String> map) {

@@ -44,7 +44,7 @@ public class NuevoAvion extends JPanel {
     private JSpinner velocidadField;
 
     private String[] tiposDeMotor = { "a reaccion", "a helice", "de pistones" };
-    private String tipoDeMotorSeleccionado;
+    private String tipoDeMotorSeleccionado = "a reaccion";
     private JLabel motorLabel;
     private JComboBox<String> motorBox;
 
@@ -115,7 +115,7 @@ public class NuevoAvion extends JPanel {
                                     Provider.addAvion(new Gold(nombreAvionField.getText(),
                                             (double) (Integer) combustibleField.getValue(),
                                             (double) (Integer) costoKMField.getValue(),
-                                            (double) (Integer) capacidadField.getValue(),
+                                            (Integer) capacidadField.getValue(),
                                             (double) (Integer) velocidadField.getValue(), tipoDeMotorSeleccionado,
                                             random.nextBoolean()));
 
@@ -128,7 +128,7 @@ public class NuevoAvion extends JPanel {
                                     Provider.addAvion(new Silver(nombreAvionField.getText(),
                                             (double) (Integer) combustibleField.getValue(),
                                             (double) (Integer) costoKMField.getValue(),
-                                            (double) (Integer) capacidadField.getValue(),
+                                            (Integer) capacidadField.getValue(),
                                             (double) (Integer) velocidadField.getValue(), tipoDeMotorSeleccionado));
 
                                     Storage.guardarAviones(Provider.getAviones());
@@ -141,11 +141,11 @@ public class NuevoAvion extends JPanel {
                                     Provider.addAvion(new Bronze(nombreAvionField.getText(),
                                             (double) (Integer) combustibleField.getValue(),
                                             (double) (Integer) costoKMField.getValue(),
-                                            (double) (Integer) capacidadField.getValue(),
+                                            (Integer) capacidadField.getValue(),
                                             (double) (Integer) velocidadField.getValue(), tipoDeMotorSeleccionado));
 
                                     Storage.guardarAviones(Provider.getAviones());
-                                    
+
                                     System.out.println(Provider.getAviones());
                                     exceptionLabel.setText("Avion Bronze agregado");
                                     break;

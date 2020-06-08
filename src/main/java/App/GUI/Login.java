@@ -72,19 +72,18 @@ public class Login extends JPanel {
                             if (map.get("username").equals(userField.getText())) {
                                 if (map.get("contraseña").equals(new String(passwordField.getPassword()))) {
                                     Provider.setCurrentUser(map);
-
                                     frame.dispose();
                                     new HomePage().setVisible(true);
 
                                 } else {
-                                    throw new Exception("Contraseña incorrecta");
+                                    exceptionLabel.setText("Contraseña incorrecta");
                                 }
                             } else if (userField.getText().equals("dev")
                                     && new String(passwordField.getPassword()).equals("2468")) {
                                 frame.dispose();
                                 new DevScreen().setVisible(true);
                             } else {
-                                throw new Exception("El usuario no existe");
+                                exceptionLabel.setText("El usuario no existe");
                             }
                         }
                     }

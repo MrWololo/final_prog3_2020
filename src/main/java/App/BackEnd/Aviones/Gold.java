@@ -4,8 +4,11 @@ import App.BackEnd.Avion;
 
 public class Gold extends Avion {
 
-    private static final long serialVersionUID = -3583224515901391116L;
     
+    /**
+     *
+     */
+    private static final long serialVersionUID = 532365598491366848L;
     private boolean wifi;
 
     /*public Gold(boolean wifi) {
@@ -13,8 +16,11 @@ public class Gold extends Avion {
         this.wifi = wifi;
     }*/
 
-    public Gold(String nombre, double combustible, double costo, double capacidad, double velocidad, String motor, boolean wifi) {
-        super(nombre, combustible, costo, capacidad, velocidad, motor, true);
+    public Gold() {
+    }
+
+    public Gold(String nombre, double combustible, double costo, int capacidad, double velocidad, String motor, boolean wifi) {
+        super(nombre, combustible, costo, capacidad, velocidad, motor, true, 6000);
         this.wifi = wifi;
     }
 

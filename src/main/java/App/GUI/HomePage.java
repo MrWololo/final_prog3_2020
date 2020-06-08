@@ -38,13 +38,13 @@ public class HomePage extends JFrame {
 
         panel.add(contratarButton);
 
-        avionesButton = new JButton("Aviones");
+        /*avionesButton = new JButton("Aviones");
         avionesButton.setBounds(10, 60, 80, 25);
         avionesButton.addActionListener(actionEvent -> {
 
         });
 
-        panel.add(avionesButton);
+        panel.add(avionesButton);*/
 
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

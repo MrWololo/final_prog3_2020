@@ -11,9 +11,13 @@ public class App {
         WebLookAndFeel.install();
         if (Storage.usersExist()) {
             Provider.processFetch(Storage.fetchRegistro());
+            System.out.println(Provider.getUsers());
         }
         if (Storage.avionesExist()) {
             Provider.setAviones(Storage.fetchAviones());
+        }
+        if (Storage.viajesExist()) {
+            Provider.setViajes(Storage.fetchViajes());
         }
 
         new MainMenu();

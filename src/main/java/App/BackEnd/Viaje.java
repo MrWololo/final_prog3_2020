@@ -1,16 +1,23 @@
 package App.BackEnd;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Viaje {
 
-    final private Date fecha;
-    final private String origen;
-    final private String destino;
-    final private int acompañantes;
-    final private Avion avion;
+    private LocalDate fecha;
 
-    public Viaje(Date fecha, String origen, String destino, int acompañantes, Avion avion) {
+    private String origen;
+
+    private String destino;
+
+    private int acompañantes;
+
+    private Avion avion;
+
+    public Viaje() {
+    }
+
+    public Viaje(LocalDate fecha, String origen, String destino, int acompañantes, Avion avion) {
         this.fecha = fecha;
         this.origen = origen;
         this.destino = destino;
@@ -18,8 +25,7 @@ public class Viaje {
         this.avion = avion;
     }
 
-
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return this.fecha;
     }
 
@@ -38,6 +44,5 @@ public class Viaje {
     public Avion getAvion() {
         return this.avion;
     }
-
 
 }

@@ -2,21 +2,32 @@ package App.BackEnd;
 
 import java.io.Serializable;
 
-//Gson es la unica razon por la cual esta clase no
-//es Abstracta
-public class Avion implements Serializable{
-    private static final long serialVersionUID = -3012858995760993125L;
-    
+//import com.google.gson.JsonDeserializer;
+//import com.google.gson.JsonSerializer;
+
+/*@JsonSubTypes({
+    @JsonSubTypes.Type(value = Gold.class, name = "Gold"),
+    @JsonSubTypes.Type(value = Silver.class, name = "Silver"),
+    @JsonSubTypes.Type(value = Bronze.class, name = "Bronze")
+})*/
+
+public abstract class Avion implements Serializable {
+
+    private static final long serialVersionUID = -3565962209839080101L;
     private String nombre;
     private double combustible;
     private double costoKM;
-    private double capacidad;
+    private int capacidad;
     private double velocidad;
     private String motor;
     private boolean catering;
+    private double tarifaTipoAvion;
 
-    public Avion(String nombre, double combustible, double costoKM, double capacidad, double velocidad, String motor,
-            boolean catering) {
+    public Avion() {
+    }
+
+    public Avion(String nombre, double combustible, double costoKM, int capacidad, double velocidad, String motor,
+            boolean catering, double tarifaTipoAvion) {
         this.nombre = nombre;
         this.combustible = combustible;
         this.costoKM = costoKM;
@@ -24,6 +35,7 @@ public class Avion implements Serializable{
         this.velocidad = velocidad;
         this.motor = motor;
         this.catering = catering;
+        this.tarifaTipoAvion = tarifaTipoAvion;
     }
 
     public String getNombre() {
@@ -38,7 +50,7 @@ public class Avion implements Serializable{
         return this.costoKM;
     }
 
-    public double getCapacidad() {
+    public int getCapacidad() {
         return this.capacidad;
     }
 
@@ -52,6 +64,10 @@ public class Avion implements Serializable{
 
     public boolean hasCatering() {
         return this.catering;
+    }
+
+    public double getTarifaTipoAvion() {
+        return tarifaTipoAvion;
     }
 
 }
