@@ -68,24 +68,27 @@ public class Login extends JPanel {
                     if (Provider.getUsers().isEmpty()) {
                         throw new Exception("No existen Usuarios");
                     } else {
-                        for (Map<String, String> map : Provider.getUsers()) {
-                            if (map.get("username").equals(userField.getText())) {
-                                if (map.get("contraseña").equals(new String(passwordField.getPassword()))) {
-                                    Provider.setCurrentUser(map);
-                                    frame.dispose();
-                                    new HomePage().setVisible(true);
+                        if (!(userField.getText().equals("dev")
+                                && new String(passwordField.getPassword()).equals("2468"))) {
+                            for (Map<String, String> map : Provider.getUsers()) {
+                                if (map.get("username").equals(userField.getText())) {
+                                    if (map.get("contraseña").equals(new String(passwordField.getPassword()))) {
+                                        Provider.setCurrentUser(map);
+                                        frame.dispose();
+                                        new HomePage().setVisible(true);
 
+                                    } else {
+                                        exceptionLabel.setText("Contraseña incorrecta");
+                                    }
                                 } else {
-                                    exceptionLabel.setText("Contraseña incorrecta");
+                                    exceptionLabel.setText("El usuario no existe");
                                 }
-                            } else if (userField.getText().equals("dev")
-                                    && new String(passwordField.getPassword()).equals("2468")) {
-                                frame.dispose();
-                                new DevScreen().setVisible(true);
-                            } else {
-                                exceptionLabel.setText("El usuario no existe");
                             }
+                        } else {
+                            frame.dispose();
+                            new DevScreen().setVisible(true);
                         }
+
                     }
 
                 }

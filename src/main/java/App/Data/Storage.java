@@ -70,18 +70,7 @@ public class Storage {
     public static void guardarAviones(ArrayList<Avion> aviones) {
 
         try {
-            /*
-             * FileOutputStream f = new FileOutputStream("Aviones.txt", false);
-             * ObjectOutputStream o = new ObjectOutputStream(f);
-             * 
-             * //Gson gson = new Gson(); //String avionesJson = gson.toJson(aviones);
-             * ObjectMapper oMapper = new ObjectMapper(); String avionesJson =
-             * oMapper.writeValueAsString(aviones);
-             * 
-             * o.writeObject(avionesJson);
-             * 
-             * o.close(); f.close();
-             */
+
             oMapper.writeValue(new File("Aviones.txt"), aviones);
 
         } catch (FileNotFoundException e) {
@@ -93,23 +82,6 @@ public class Storage {
 
     public static ArrayList<Avion> fetchAviones() {
         try {
-            /*
-             * FileInputStream f = new FileInputStream("Aviones.txt"); ObjectInputStream o =
-             * new ObjectInputStream(f);
-             * 
-             * Gson gson = new Gson();
-             * 
-             * String json = (String) o.readObject(); System.out.println(json);
-             * 
-             * o.close(); f.close(); return gson.fromJson(json, new
-             * TypeToken<ArrayList<Avion>>() { }.getType());
-             */
-
-            // return oMapper.readValue(new File("Aviones.txt"), Avion[].class);
-            /*
-             * System.out.println( "aviones: " + oMapper.readTree(new File("Aviones.txt")));
-             */
-            // return oMapper.readTree(new File("Aviones.txt")).;
             return oMapper.readValue(new File("Aviones.txt"), new TypeReference<ArrayList<Avion>>() {
             });
 

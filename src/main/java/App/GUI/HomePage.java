@@ -6,6 +6,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import App.Data.Provider;
+
 public class HomePage extends JFrame {
 
     private static final long serialVersionUID = 8496524709915595739L;
@@ -16,7 +18,7 @@ public class HomePage extends JFrame {
     private JButton avionesButton;
 
     public HomePage() {
-
+        System.out.println(Provider.getViajes().get(Provider.getCurrentUser().get("username")));
         panel = new JPanel();
         panel.setLayout(null);
 
@@ -38,13 +40,14 @@ public class HomePage extends JFrame {
 
         panel.add(contratarButton);
 
-        /*avionesButton = new JButton("Aviones");
-        avionesButton.setBounds(10, 60, 80, 25);
-        avionesButton.addActionListener(actionEvent -> {
-
-        });
-
-        panel.add(avionesButton);*/
+        /*
+         * avionesButton = new JButton("Aviones"); avionesButton.setBounds(10, 60, 80,
+         * 25); avionesButton.addActionListener(actionEvent -> {
+         * 
+         * });
+         * 
+         * panel.add(avionesButton);
+         */
 
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
