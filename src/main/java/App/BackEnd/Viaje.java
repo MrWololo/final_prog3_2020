@@ -1,6 +1,8 @@
 package App.BackEnd;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Viaje {
 
@@ -23,6 +25,13 @@ public class Viaje {
         this.destino = destino;
         this.acompañantes = acompañantes;
         this.avion = avion;
+    }
+
+    public String[] getValuesString() {
+        String[] array = { getFecha().toString(), getOrigen().toString(), getDestino().toString(),
+                String.valueOf(getAcompañantes()), getAvion().getNombre() };
+
+        return array;
     }
 
     public LocalDate getFecha() {
