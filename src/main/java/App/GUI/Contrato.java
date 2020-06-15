@@ -7,7 +7,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JTable;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.table.DefaultTableModel;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -139,7 +141,8 @@ public class Contrato extends JPanel {
                         if (!Provider.getViajes().isEmpty()) {
                             if (Provider.getViajes().get(Provider.getCurrentUser().get("username")) != null
                                     && Provider.getViajes().get(Provider.getCurrentUser().get("username")).stream()
-                                            .anyMatch(viaje -> viaje.getAvion().equals(avionSeleccionado))
+                                            .anyMatch(viaje -> viaje.getAvion().getNombre()
+                                                    .equals(avionSeleccionado.getNombre()))
                                     && Provider.getViajes().get(Provider.getCurrentUser().get("username")).stream()
                                             .anyMatch(viaje -> viaje.getFecha().equals(fechaField.getDate()))) {
                                 totalLabel.setText("");
@@ -198,7 +201,7 @@ public class Contrato extends JPanel {
         return false;
     }
 
-    public Contrato(final JFrame frame, final JPanel previousJPanel) {
+    public Contrato(final JFrame frame, final JPanel previousJPanel, final JTable viajesTable) {
 
         setLayout(new MigLayout());
 
@@ -266,10 +269,16 @@ public class Contrato extends JPanel {
         finalizarButton = new JButton("Finalizar");
         finalizarButton.addActionListener(actionEvent -> {
             if (validar(this)) {
-                Provider.addViaje(new Viaje(fechaField.getDate(), ((String) origenBox.getSelectedItem()),
-                        ((String) destinoBox.getSelectedItem()), ((int) pasajerosField.getValue()), avionSeleccionado));
+                DefaultTableModel tableModel = (DefaultTableModel) viajesTable.getModel();
+                tableModel.addRow(Provider.addViaje(new Viaje(fechaField.getDate(),
+                        ((String) origenBox.getSelectedItem()), ((String) destinoBox.getSelectedItem()),
+                        ((int) pasajerosField.getValue()), avionSeleccionado)).getValuesString());
+                ;
                 Storage.guardarViajes(Provider.getViajes());
                 exceptionLabel.setText("Viaje guardado");
+
+                viajesTable.revalidate();
+
             }
         });
         add(finalizarButton, "gapleft 10, gaptop 380, cell 0 9, grow");
@@ -278,6 +287,8 @@ public class Contrato extends JPanel {
         backButton.addActionListener(actionEvent -> {
             frame.setContentPane(previousJPanel);
             frame.revalidate();
+            previousJPanel.revalidate();
+            viajesTable.revalidate();
         });
         add(backButton, "gapleft 10, cell 0 10, grow");
 

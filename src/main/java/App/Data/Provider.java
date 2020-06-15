@@ -65,10 +65,11 @@ public abstract class Provider {
     }
 
     public static Map<String, ArrayList<Viaje>> getViajes() {
+        System.out.println(Provider.viajesContratados);
         return Provider.viajesContratados;
     }
 
-    public static void addViaje(Viaje viaje) {
+    public static Viaje addViaje(Viaje viaje) {
         if (Provider.viajesContratados.containsKey(Provider.currentUser.get("username"))) {
             ArrayList<Viaje> viajes = Provider.viajesContratados.get(Provider.currentUser.get("username"));
             viajes.add(viaje);
@@ -77,6 +78,17 @@ public abstract class Provider {
             Provider.viajesContratados.putIfAbsent(Provider.currentUser.get("username"),
                     new ArrayList<Viaje>(Arrays.asList(viaje)));
         }
+        return viaje;
+    }
+
+    public static String[][] getViajesTable() {
+
+        if (Provider.getViajes().get(Provider.getCurrentUser().get("username")) != null
+                && !Provider.getViajes().get(Provider.getCurrentUser().get("username")).isEmpty()) {
+            return Provider.getViajes().get(Provider.getCurrentUser().get("username")).stream()
+                    .map((Viaje value) -> value.getValuesString()).toArray(size -> new String[size][]);
+        }
+        return new String[0][0];
     }
 
     public static boolean userExists(Map<String, String> map) {

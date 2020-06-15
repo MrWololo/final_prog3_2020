@@ -1,8 +1,8 @@
 package App.BackEnd;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class Viaje {
 
@@ -27,6 +27,7 @@ public class Viaje {
         this.avion = avion;
     }
 
+    @JsonIgnore
     public String[] getValuesString() {
         String[] array = { getFecha().toString(), getOrigen().toString(), getDestino().toString(),
                 String.valueOf(getAcompañantes()), getAvion().getNombre() };
