@@ -1,5 +1,7 @@
 package App;
 
+import javax.swing.SwingUtilities;
+
 import com.alee.laf.WebLookAndFeel;
 
 import App.Data.Provider;
@@ -20,6 +22,12 @@ public class App {
             Provider.setViajes(Storage.fetchViajes());
         }
 
-        new MainMenu();
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new MainMenu();
+            }
+        });
+        // new MainMenu();
     }
 }

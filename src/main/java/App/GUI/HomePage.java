@@ -1,15 +1,27 @@
 package App.GUI;
 
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Map;
+
+import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 //import javax.swing.BorderFactory;
 //import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
+import App.BackEnd.Viaje;
 import App.Data.Provider;
+import App.Data.Storage;
 
 public class HomePage extends JFrame {
     private static final long serialVersionUID = 8496524709915595739L;
@@ -20,22 +32,18 @@ public class HomePage extends JFrame {
     private JButton avionesButton;
 
     private JTable table;
-    private String[] columnasTable = { "Fecha", "Origen", "destino", "Pasajeros", "Avion" };
+    private String[] columnasTable = { "", "Fecha", "Origen", "destino", "Pasajeros", "Avion" };
     private JScrollPane scrollPane;
 
     private String[][] biArray = Provider.getViajesTable();
 
     public HomePage() {
 
-        if (biArray != null && biArray.length != 0) {
-            for (String[] strings : biArray) {
-                for (String string : strings) {
-                    System.out.println(string);
-                    System.out.println("here you cunt");
-                }
-                System.out.println("\n");
-            }
-        }
+        /*
+         * if (biArray != null && biArray.length != 0) { for (String[] strings :
+         * biArray) { for (String string : strings) { System.out.println(string); }
+         * System.out.println("\n"); } }
+         */
 
         panel = new JPanel();
         panel.setLayout(null);
@@ -71,6 +79,9 @@ public class HomePage extends JFrame {
             table = new JTable();
             populatetable(table, columnasTable, biArray);
             table.setDefaultEditor(Object.class, null);
+            table.getColumn("").setCellRenderer(new ButtonRenderer());
+            table.getColumn("").setCellEditor(new ButtonEditor(new JCheckBox()));
+            table.setRowHeight(25);
             // table.setModel(tableModel);
             scrollPane = new JScrollPane();
             scrollPane.setBounds(100, 10, 650, 450);
@@ -98,4 +109,92 @@ public class HomePage extends JFrame {
         table.setModel(tablemodel);
         return table;
     }
+
+    class ButtonRenderer extends JButton implements TableCellRenderer {
+        private static final long serialVersionUID = 3432759493366670389L;
+
+        public ButtonRenderer() {
+            setOpaque(true);
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+                int row, int column) {
+            if (isSelected) {
+                setForeground(table.getSelectionForeground());
+                setBackground(table.getSelectionBackground());
+            } else {
+                setForeground(table.getForeground());
+                setBackground(UIManager.getColor("Button.background"));
+            }
+            setText((value == null) ? "" : value.toString());
+            return this;
+        }
+    }
+
+    class ButtonEditor extends DefaultCellEditor {
+
+        private static final long serialVersionUID = -2491215962333012994L;
+        protected JButton button;
+        private String label;
+        private boolean isPushed;
+
+        public ButtonEditor(JCheckBox checkBox) {
+            super(checkBox);
+            button = new JButton();
+            button.setOpaque(true);
+            button.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    fireEditingStopped();
+                    DefaultTableModel model = (DefaultTableModel) table.getModel();
+                    model.removeRow(table.getSelectedRow());
+                }
+            });
+        }
+
+        @Override
+        public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
+                int column) {
+            if (isSelected) {
+                button.setForeground(table.getSelectionForeground());
+                button.setBackground(table.getSelectionBackground());
+            } else {
+                button.setForeground(table.getForeground());
+                button.setBackground(table.getBackground());
+            }
+            label = (value == null) ? "" : value.toString();
+            button.setText(label);
+            isPushed = true;
+            return button;
+        }
+
+        @Override
+        public Object getCellEditorValue() {
+            if (isPushed && table.getSelectedRow() != -1) {
+                int row = table.getSelectedRow();
+
+                Map<String, ArrayList<Viaje>> viajesData = Provider.getViajes();
+                ArrayList<Viaje> viajeList = viajesData.get(Provider.getCurrentUser().get("username"));
+
+                viajeList.remove(row);
+
+                viajesData.put(Provider.getCurrentUser().get("username"), viajeList);
+
+                Provider.setViajes(viajesData);
+                Storage.guardarViajes(viajesData);
+            }
+            isPushed = false;
+            return label;
+        }
+
+        @Override
+        public boolean stopCellEditing() {
+            isPushed = false;
+            return super.stopCellEditing();
+        }
+
+    }
+
 }

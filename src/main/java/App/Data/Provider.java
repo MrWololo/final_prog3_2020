@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import com.alee.utils.ArrayUtils;
+
 import App.BackEnd.Avion;
 import App.BackEnd.Viaje;
 
@@ -65,7 +67,7 @@ public abstract class Provider {
     }
 
     public static Map<String, ArrayList<Viaje>> getViajes() {
-        System.out.println(Provider.viajesContratados);
+        // System.out.println(Provider.viajesContratados);
         return Provider.viajesContratados;
     }
 
@@ -85,8 +87,22 @@ public abstract class Provider {
 
         if (Provider.getViajes().get(Provider.getCurrentUser().get("username")) != null
                 && !Provider.getViajes().get(Provider.getCurrentUser().get("username")).isEmpty()) {
-            return Provider.getViajes().get(Provider.getCurrentUser().get("username")).stream()
-                    .map((Viaje value) -> value.getValuesString()).toArray(size -> new String[size][]);
+
+            // String cancelTag = new String("Cancelar");
+
+            String[][] biArray = Provider
+                    .getViajes().get(Provider.getCurrentUser().get("username")).stream().map((Viaje value) -> ArrayUtils
+                            .insert(value.getValuesString(), 0, "Cancelar"))
+                    .toArray(size -> new String[size][]);
+
+            for (String[] strings : biArray) {
+                for (String strings2 : strings) {
+                    System.out.println(strings2);
+                }
+                System.out.println("\n");
+            }
+
+            return biArray;
         }
         return new String[0][0];
     }
