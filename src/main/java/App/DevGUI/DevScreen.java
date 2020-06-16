@@ -4,16 +4,19 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import App.GUI.AvionesMenu;
 import App.GUI.MainMenu;
 
-public class DevScreen extends JFrame{
+public class DevScreen extends JFrame {
 
     private static final long serialVersionUID = 6253383350544902274L;
 
     private JPanel panel;
     private JButton backButton;
     private JButton newButton;
-    //private JButton avionesButton;
+    private JButton avionesButton;
+    //private JButton deleteButton;
+    // private JButton avionesButton;
 
     public DevScreen() {
 
@@ -38,13 +41,18 @@ public class DevScreen extends JFrame{
 
         panel.add(newButton);
 
-        /*avionesButton = new JButton("Aviones");
+        /*;*/
+
+        avionesButton = new JButton("Aviones");
         avionesButton.setBounds(10, 60, 80, 25);
         avionesButton.addActionListener(actionEvent -> {
+            JPanel avionesPanel = new AvionesMenu(this, panel, true);
 
-        });*/
+            setContentPane(avionesPanel);
+            this.setSize(800, 600);
+        });
 
-        //panel.add(avionesButton);
+        panel.add(avionesButton);
 
         setSize(250, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

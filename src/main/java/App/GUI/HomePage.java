@@ -61,7 +61,7 @@ public class HomePage extends JFrame {
         avionesButton = new JButton("Aviones");
         avionesButton.setBounds(10, 60, 80, 25);
         avionesButton.addActionListener(actionEvent -> {
-            setContentPane(new AvionesMenu(this, panel));
+            setContentPane(new AvionesMenu(this, panel, false));
             revalidate();
         });
 
