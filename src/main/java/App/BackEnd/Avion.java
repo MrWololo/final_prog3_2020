@@ -2,6 +2,8 @@ package App.BackEnd;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import App.TableUtils.TableAdapter;
 
 //import com.google.gson.JsonDeserializer;
@@ -40,6 +42,7 @@ public abstract class Avion implements Serializable, TableAdapter {
         this.tarifaTipoAvion = tarifaTipoAvion;
     }
 
+    @JsonIgnore
     public String[] getValuesString() {
         String[] array = { getNombre().toString(), String.valueOf(getCombustible()), String.valueOf(getCostoKM()),
                 String.valueOf(getCapacidad()), String.valueOf(getVelocidad()), getMotor().toString(),

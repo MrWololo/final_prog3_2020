@@ -5,7 +5,7 @@ import App.TableUtils.TableAdapter;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class Viaje implements TableAdapter{
+public class Viaje implements TableAdapter {
 
     private LocalDate fecha;
 

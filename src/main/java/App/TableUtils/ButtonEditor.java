@@ -2,16 +2,19 @@ package App.TableUtils;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Map;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import App.BackEnd.Viaje;
+import App.BackEnd.Avion;
 import App.Data.Provider;
 import App.Data.Storage;
 
@@ -25,7 +28,7 @@ public class ButtonEditor extends DefaultCellEditor {
     private boolean isPushed;
     private JTable table;
 
-    public ButtonEditor(JTable importedTable, JCheckBox checkBox) {
+    public ButtonEditor(JTable importedTable, JLabel exceptionLabel, JCheckBox checkBox) {
         super(checkBox);
 
         table = importedTable;
@@ -36,9 +39,18 @@ public class ButtonEditor extends DefaultCellEditor {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                fireEditingStopped();
-                DefaultTableModel model = (DefaultTableModel) table.getModel();
-                model.removeRow(table.getSelectedRow());
+                if (!Provider.getViajes().get(Provider.getCurrentUser().get("username")).get(table.getSelectedRow())
+                        .getFecha().isBefore(LocalDate.now().plusDays(1))) {
+                    fireEditingStopped();
+                    DefaultTableModel model = (DefaultTableModel) table.getModel();
+                    model.removeRow(table.getSelectedRow());
+                } else {
+                    try {
+                        throw new Exception("No se puede cancelar un viaje con menos de 24 horas de anticipo");
+                    } catch (Exception e1) {
+                        exceptionLabel.setText(e1.getMessage());
+                    }
+                }
 
             }
         });

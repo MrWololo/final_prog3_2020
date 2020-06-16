@@ -5,6 +5,7 @@ import javax.swing.JCheckBox;
 //import javax.swing.BorderFactory;
 //import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -22,8 +23,9 @@ public class HomePage extends JFrame {
     private JButton backButton;
     private JButton contratarButton;
     private JButton avionesButton;
+    private JLabel exceptionLabel;
 
-    private JTable table;
+    private JTable table = new JTable();
     private String[] columnasTable = { "", "Fecha", "Origen", "destino", "Pasajeros", "Avion" };
     private JScrollPane scrollPane;
 
@@ -67,15 +69,19 @@ public class HomePage extends JFrame {
 
         panel.add(avionesButton);
 
+        exceptionLabel = new JLabel("");
+        exceptionLabel.setBounds(10, 470, 400, 25);
+
+        panel.add(exceptionLabel);
+
         if (Provider.getViajes().get(Provider.getCurrentUser().get("username")) != null
                 && !Provider.getViajes().get(Provider.getCurrentUser().get("username")).isEmpty()) {
             table = new JTable();
             TableUtils.populatetable(table, columnasTable, biArray);
             table.setDefaultEditor(Object.class, null);
             table.getColumn("").setCellRenderer(new ButtonRenderer());
-            table.getColumn("").setCellEditor(new ButtonEditor(table, new JCheckBox()));
+            table.getColumn("").setCellEditor(new ButtonEditor(table, exceptionLabel, new JCheckBox()));
             table.setRowHeight(25);
-            // table.setModel(tableModel);
             scrollPane = new JScrollPane();
             scrollPane.setBounds(100, 10, 650, 450);
             scrollPane.setViewportView(table);

@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.util.stream.Collectors;
 import java.awt.Image;
 
+import com.alee.utils.ArrayUtils;
 import com.github.lgooddatepicker.components.DatePicker;
 
 import App.Data.Provider;
@@ -270,9 +271,12 @@ public class Contrato extends JPanel {
         finalizarButton.addActionListener(actionEvent -> {
             if (validar(this)) {
                 DefaultTableModel tableModel = (DefaultTableModel) viajesTable.getModel();
-                tableModel.addRow(Provider.addViaje(new Viaje(fechaField.getDate(),
-                        ((String) origenBox.getSelectedItem()), ((String) destinoBox.getSelectedItem()),
-                        ((int) pasajerosField.getValue()), avionSeleccionado)).getValuesString());
+                tableModel
+                        .addRow(ArrayUtils.insert(
+                                Provider.addViaje(new Viaje(fechaField.getDate(),
+                                        ((String) origenBox.getSelectedItem()), ((String) destinoBox.getSelectedItem()),
+                                        ((int) pasajerosField.getValue()), avionSeleccionado)).getValuesString(),
+                                0, "Cancelar"));
                 ;
                 Storage.guardarViajes(Provider.getViajes());
                 exceptionLabel.setText("Viaje guardado");
