@@ -88,11 +88,27 @@ public abstract class Provider {
         if (Provider.getViajes().get(Provider.getCurrentUser().get("username")) != null
                 && !Provider.getViajes().get(Provider.getCurrentUser().get("username")).isEmpty()) {
 
-            // String cancelTag = new String("Cancelar");
+            String[][] biArray = Provider.getViajes().get(Provider.getCurrentUser().get("username")).stream()
+                    .map((Viaje value) -> ArrayUtils.insert(value.getValuesString(), 0, "Cancelar"))
+                    .toArray(size -> new String[size][]);
 
-            String[][] biArray = Provider
-                    .getViajes().get(Provider.getCurrentUser().get("username")).stream().map((Viaje value) -> ArrayUtils
-                            .insert(value.getValuesString(), 0, "Cancelar"))
+            for (String[] strings : biArray) {
+                for (String strings2 : strings) {
+                    System.out.println(strings2);
+                }
+                System.out.println("\n");
+            }
+
+            return biArray;
+        }
+        return new String[0][0];
+    }
+
+    public static String[][] getAvionesTable() {
+
+        if (!Provider.getAviones().isEmpty()) {
+
+            String[][] biArray = Provider.getAviones().stream().map((Avion value) -> value.getValuesString())
                     .toArray(size -> new String[size][]);
 
             for (String[] strings : biArray) {

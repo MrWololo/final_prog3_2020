@@ -2,6 +2,8 @@ package App.BackEnd;
 
 import java.io.Serializable;
 
+import App.TableUtils.TableAdapter;
+
 //import com.google.gson.JsonDeserializer;
 //import com.google.gson.JsonSerializer;
 
@@ -11,7 +13,7 @@ import java.io.Serializable;
     @JsonSubTypes.Type(value = Bronze.class, name = "Bronze")
 })*/
 
-public abstract class Avion implements Serializable {
+public abstract class Avion implements Serializable, TableAdapter {
 
     private static final long serialVersionUID = -3565962209839080101L;
     private String nombre;
@@ -36,6 +38,14 @@ public abstract class Avion implements Serializable {
         this.motor = motor;
         this.catering = catering;
         this.tarifaTipoAvion = tarifaTipoAvion;
+    }
+
+    public String[] getValuesString() {
+        String[] array = { getNombre().toString(), String.valueOf(getCombustible()), String.valueOf(getCostoKM()),
+                String.valueOf(getCapacidad()), String.valueOf(getVelocidad()), getMotor().toString(),
+                hasCatering() ? "Con Catering" : "Sin Catering"};
+
+        return array;
     }
 
     public String getNombre() {

@@ -1,10 +1,11 @@
 package App.BackEnd;
 
 import java.time.LocalDate;
+import App.TableUtils.TableAdapter;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class Viaje {
+public class Viaje implements TableAdapter{
 
     private LocalDate fecha;
 
