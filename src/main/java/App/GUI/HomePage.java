@@ -15,6 +15,7 @@ import App.Data.Provider;
 import App.TableUtils.ButtonEditor;
 import App.TableUtils.ButtonRenderer;
 import App.TableUtils.TableUtils;
+import net.miginfocom.swing.MigLayout;
 
 public class HomePage extends JFrame {
     private static final long serialVersionUID = 8496524709915595739L;
@@ -23,13 +24,15 @@ public class HomePage extends JFrame {
     private JButton backButton;
     private JButton contratarButton;
     private JButton avionesButton;
+    private JButton ;
     private JLabel exceptionLabel;
+    private JLabel totalLabel;
 
     private JTable table = new JTable();
     private String[] columnasTable = { "", "Fecha", "Origen", "destino", "Pasajeros", "Avion" };
     private JScrollPane scrollPane;
 
-    private String[][] biArray = Provider.getViajesTable();
+    private String[][] biArray = Provider.getViajesTable(Provider.getCurrentUser().get("username"));
 
     public HomePage() {
 
@@ -40,25 +43,17 @@ public class HomePage extends JFrame {
          */
 
         panel = new JPanel();
-        panel.setLayout(null);
+        panel.setLayout(new MigLayout());
 
         add(panel);
         backButton = new JButton("Salir");
-        backButton.setBounds(10, 10, 80, 25);
+        // backButton.setBounds(10, 10, 80, 25);
+
         backButton.addActionListener(actionEvent -> {
             dispose();
             new MainMenu().setVisible(true);
         });
-        panel.add(backButton);
-
-        contratarButton = new JButton("Contratar Vuelo");
-        contratarButton.setBounds(625, 470, 150, 25);
-        contratarButton.addActionListener(actionEvent -> {
-            setContentPane(new Contrato(this, panel, table));
-            revalidate();
-        });
-
-        panel.add(contratarButton);
+        panel.add(backButton, "cell 0 3, width 150");
 
         avionesButton = new JButton("Aviones");
         avionesButton.setBounds(10, 60, 80, 25);
@@ -67,26 +62,52 @@ public class HomePage extends JFrame {
             revalidate();
         });
 
-        panel.add(avionesButton);
+        panel.add(avionesButton, "cell 1 3, width 150, align right");
 
         exceptionLabel = new JLabel("");
         exceptionLabel.setBounds(10, 470, 400, 25);
 
-        panel.add(exceptionLabel);
+        panel.add(exceptionLabel, "cell 0 1, grow");
+
+        contratarButton = new JButton("Contratar Vuelo");
+        contratarButton.setBounds(625, 470, 150, 25);
+        contratarButton.addActionListener(actionEvent -> {
+            setContentPane(new Contrato(this, panel, totalLabel, table));
+            revalidate();
+        });
+
+        panel.add(contratarButton, "cell 1 1, align right, width 150");
 
         if (Provider.getViajes().get(Provider.getCurrentUser().get("username")) != null
                 && !Provider.getViajes().get(Provider.getCurrentUser().get("username")).isEmpty()) {
+
             table = new JTable();
+            totalLabel = new JLabel("");
+
+            /*
+             * Arrays.sort(biArray, new Comparator<String[]>() {
+             * 
+             * @Override public int compare(String[] o1, String[] o2) {
+             * 
+             * return o1.[]; }
+             * 
+             * });
+             */
+
             TableUtils.populatetable(table, columnasTable, biArray);
             table.setDefaultEditor(Object.class, null);
             table.getColumn("").setCellRenderer(new ButtonRenderer());
-            table.getColumn("").setCellEditor(new ButtonEditor(table, exceptionLabel, new JCheckBox()));
+            table.getColumn("")
+                    .setCellEditor(new ButtonEditor(table, panel, exceptionLabel, totalLabel, new JCheckBox()));
             table.setRowHeight(25);
             scrollPane = new JScrollPane();
             scrollPane.setBounds(100, 10, 650, 450);
             scrollPane.setViewportView(table);
 
-            panel.add(scrollPane);
+            panel.add(scrollPane, "cell 0 0, span 2, grow, width 800");
+
+            TableUtils.calcularTotal(panel, totalLabel);
+
         }
 
         setSize(800, 600);

@@ -10,11 +10,11 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import App.BackEnd.Viaje;
-import App.BackEnd.Avion;
 import App.Data.Provider;
 import App.Data.Storage;
 
@@ -28,7 +28,8 @@ public class ButtonEditor extends DefaultCellEditor {
     private boolean isPushed;
     private JTable table;
 
-    public ButtonEditor(JTable importedTable, JLabel exceptionLabel, JCheckBox checkBox) {
+    public ButtonEditor(JTable importedTable, JPanel panel, JLabel exceptionLabel, JLabel totalLabel,
+            JCheckBox checkBox) {
         super(checkBox);
 
         table = importedTable;
@@ -39,10 +40,12 @@ public class ButtonEditor extends DefaultCellEditor {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 if (!Provider.getViajes().get(Provider.getCurrentUser().get("username")).get(table.getSelectedRow())
                         .getFecha().isBefore(LocalDate.now().plusDays(1))) {
                     fireEditingStopped();
                     DefaultTableModel model = (DefaultTableModel) table.getModel();
+                    TableUtils.calcularTotal(panel, totalLabel);
                     model.removeRow(table.getSelectedRow());
                 } else {
                     try {

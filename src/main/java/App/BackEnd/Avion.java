@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import App.Data.Provider;
 import App.TableUtils.TableAdapter;
 
 //import com.google.gson.JsonDeserializer;
@@ -46,9 +47,15 @@ public abstract class Avion implements Serializable, TableAdapter {
     public String[] getValuesString() {
         String[] array = { getNombre().toString(), String.valueOf(getCombustible()), String.valueOf(getCostoKM()),
                 String.valueOf(getCapacidad()), String.valueOf(getVelocidad()), getMotor().toString(),
-                hasCatering() ? "Con Catering" : "Sin Catering"};
+                hasCatering() ? "Con Catering" : "Sin Catering" };
 
         return array;
+    }
+
+    @JsonIgnore
+    public double getValorTotal(Viaje viaje, String curso) {
+        return (getCostoKM() * Provider.getDistancias().get(curso)) + ((viaje.getAcompañantes()) * 3500)
+                + (getTarifaTipoAvion());
     }
 
     public String getNombre() {

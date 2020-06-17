@@ -24,6 +24,7 @@ import com.github.lgooddatepicker.components.DatePicker;
 
 import App.Data.Provider;
 import App.Data.Storage;
+import App.TableUtils.TableUtils;
 import net.miginfocom.swing.MigLayout;
 
 import App.BackEnd.*;
@@ -202,7 +203,7 @@ public class Contrato extends JPanel {
         return false;
     }
 
-    public Contrato(final JFrame frame, final JPanel previousJPanel, final JTable viajesTable) {
+    public Contrato(final JFrame frame, final JPanel previousJPanel, final JLabel previouesTotalLabel, final JTable viajesTable) {
 
         setLayout(new MigLayout());
 
@@ -277,12 +278,11 @@ public class Contrato extends JPanel {
                                         ((String) origenBox.getSelectedItem()), ((String) destinoBox.getSelectedItem()),
                                         ((int) pasajerosField.getValue()), avionSeleccionado)).getValuesString(),
                                 0, "Cancelar"));
-                ;
                 Storage.guardarViajes(Provider.getViajes());
                 exceptionLabel.setText("Viaje guardado");
-
+                TableUtils.calcularTotal(previousJPanel, previouesTotalLabel);
                 viajesTable.revalidate();
-
+                previousJPanel.revalidate();
             }
         });
         add(finalizarButton, "gapleft 10, gaptop 380, cell 0 9, grow");

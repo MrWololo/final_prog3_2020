@@ -4,10 +4,6 @@ import App.BackEnd.Avion;
 
 public class Gold extends Avion {
 
-    
-    /**
-     *
-     */
     private static final long serialVersionUID = 532365598491366848L;
     private boolean wifi;
 

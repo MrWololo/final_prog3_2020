@@ -2,6 +2,7 @@ package App.Data;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -83,14 +84,25 @@ public abstract class Provider {
         return viaje;
     }
 
-    public static String[][] getViajesTable() {
+    public static String[][] getViajesTable(String user) {
 
-        if (Provider.getViajes().get(Provider.getCurrentUser().get("username")) != null
+        if (Provider.getViajes().get(user) != null
                 && !Provider.getViajes().get(Provider.getCurrentUser().get("username")).isEmpty()) {
 
             String[][] biArray = Provider.getViajes().get(Provider.getCurrentUser().get("username")).stream()
                     .map((Viaje value) -> ArrayUtils.insert(value.getValuesString(), 0, "Cancelar"))
-                    .toArray(size -> new String[size][]);
+                    .sorted(new Comparator<String[]>() {
+
+                        @Override
+                        public int compare(String[] o1, String[] o2) {
+                            Double d1 = Double
+                                    .valueOf(o1[1].substring(0, 4) + o1[1].substring(5, 7) + o1[1].substring(8));
+                            Double d2 = Double.valueOf(o2[1].substring(0, 4) + o2[1].substring(5, 7) + o2[1].substring(8));
+
+                            return d1.compareTo(d2);
+                        }
+
+                    }).toArray(size -> new String[size][]);
 
             for (String[] strings : biArray) {
                 for (String strings2 : strings) {
