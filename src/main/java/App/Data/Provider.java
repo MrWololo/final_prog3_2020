@@ -1,5 +1,6 @@
 package App.Data;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -7,8 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
-import com.alee.utils.ArrayUtils;
 
 import App.BackEnd.Avion;
 import App.BackEnd.Viaje;
@@ -84,20 +83,20 @@ public abstract class Provider {
         return viaje;
     }
 
-    public static String[][] getViajesTable(String user) {
+    public static String[][] getViajesTable(String user, LocalDate specificDate) {
 
-        if (Provider.getViajes().get(user) != null
-                && !Provider.getViajes().get(Provider.getCurrentUser().get("username")).isEmpty()) {
+        if (Provider.getViajes().get(user) != null && !Provider.getViajes().get(user).isEmpty()) {
 
-            String[][] biArray = Provider.getViajes().get(Provider.getCurrentUser().get("username")).stream()
-                    .map((Viaje value) -> ArrayUtils.insert(value.getValuesString(), 0, "Cancelar"))
-                    .sorted(new Comparator<String[]>() {
+            String[][] biArray = Provider.getViajes().get(user).stream()
+                    .filter((Viaje viaje) -> specificDate != null ? viaje.getFecha().equals(specificDate) : true)
+                    .map((Viaje viaje) -> viaje.getValuesString()).sorted(new Comparator<String[]>() {
 
                         @Override
                         public int compare(String[] o1, String[] o2) {
                             Double d1 = Double
-                                    .valueOf(o1[1].substring(0, 4) + o1[1].substring(5, 7) + o1[1].substring(8));
-                            Double d2 = Double.valueOf(o2[1].substring(0, 4) + o2[1].substring(5, 7) + o2[1].substring(8));
+                                    .valueOf(o1[0].substring(0, 4) + o1[0].substring(5, 7) + o1[0].substring(8));
+                            Double d2 = Double
+                                    .valueOf(o2[0].substring(0, 4) + o2[0].substring(5, 7) + o2[0].substring(8));
 
                             return d1.compareTo(d2);
                         }

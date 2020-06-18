@@ -15,7 +15,8 @@ public class DevScreen extends JFrame {
     private JButton backButton;
     private JButton newButton;
     private JButton avionesButton;
-    //private JButton deleteButton;
+    private JButton clientesButton;
+    // private JButton deleteButton;
     // private JButton avionesButton;
 
     public DevScreen() {
@@ -41,7 +42,7 @@ public class DevScreen extends JFrame {
 
         panel.add(newButton);
 
-        /*;*/
+        /* ; */
 
         avionesButton = new JButton("Aviones");
         avionesButton.setBounds(10, 60, 80, 25);
@@ -53,6 +54,15 @@ public class DevScreen extends JFrame {
         });
 
         panel.add(avionesButton);
+
+        clientesButton = new JButton("Clientes");
+        clientesButton.setBounds(100, 60, 80, 25);
+        clientesButton.addActionListener(actionEvent -> {
+            setContentPane(new ListaClientes(this, panel));
+            this.setSize(800, 600);
+        });
+
+        panel.add(clientesButton);
 
         setSize(250, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

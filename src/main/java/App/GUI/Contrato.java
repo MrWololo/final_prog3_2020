@@ -203,7 +203,8 @@ public class Contrato extends JPanel {
         return false;
     }
 
-    public Contrato(final JFrame frame, final JPanel previousJPanel, final JLabel previouesTotalLabel, final JTable viajesTable) {
+    public Contrato(final JFrame frame, final JPanel previousJPanel, final JLabel previouesTotalLabel,
+            final JTable viajesTable) {
 
         setLayout(new MigLayout());
 
@@ -272,12 +273,12 @@ public class Contrato extends JPanel {
         finalizarButton.addActionListener(actionEvent -> {
             if (validar(this)) {
                 DefaultTableModel tableModel = (DefaultTableModel) viajesTable.getModel();
-                tableModel
-                        .addRow(ArrayUtils.insert(
-                                Provider.addViaje(new Viaje(fechaField.getDate(),
-                                        ((String) origenBox.getSelectedItem()), ((String) destinoBox.getSelectedItem()),
-                                        ((int) pasajerosField.getValue()), avionSeleccionado)).getValuesString(),
-                                0, "Cancelar"));
+
+                String[] newRow = Provider.addViaje(new Viaje(fechaField.getDate(),
+                        ((String) origenBox.getSelectedItem()), ((String) destinoBox.getSelectedItem()),
+                        ((int) pasajerosField.getValue()), avionSeleccionado)).getValuesString();
+
+                tableModel.addRow(ArrayUtils.insert(newRow, 0, "Cancelar"));
                 Storage.guardarViajes(Provider.getViajes());
                 exceptionLabel.setText("Viaje guardado");
                 TableUtils.calcularTotal(previousJPanel, previouesTotalLabel);

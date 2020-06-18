@@ -4,6 +4,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
 import java.awt.*;
 
 import App.BackEnd.Avion;
@@ -13,7 +14,11 @@ import App.Data.Provider;
 public class TableUtils {
     public static JTable populatetable(JTable table, String[] header, String[][] values) {
         DefaultTableModel tablemodel = (DefaultTableModel) table.getModel();
+
+        tablemodel.setColumnCount(0);
+        tablemodel.getDataVector().removeAllElements();
         tablemodel.setRowCount(0);
+
         for (String col : header) {
             tablemodel.addColumn(col);
         }
@@ -29,6 +34,7 @@ public class TableUtils {
         if (!Provider.getViajes().get(Provider.getCurrentUser().get("username")).isEmpty()) {
             totalLabel = new JLabel();
             totalLabel.setBounds(625, 500, 150, 25);
+
             double total = 0;
             for (Viaje viaje : Provider.getViajes().get(Provider.getCurrentUser().get("username"))) {
 
@@ -56,7 +62,7 @@ public class TableUtils {
                 }
             }
 
-            panel.add(totalLabel, "cell 1 4, align right");
+            panel.add(totalLabel, "cell 1 5, align right");
             panel.revalidate();
             panel.repaint();
             System.out.println(totalLabel.getText());

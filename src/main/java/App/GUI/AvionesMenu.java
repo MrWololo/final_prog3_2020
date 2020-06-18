@@ -52,7 +52,7 @@ public class AvionesMenu extends JPanel {
             frame.revalidate();
         });
 
-        add(backButton, "gapleft 10, cell 0 1, grow");
+        add(backButton, "cell 0 1, grow");
 
         if (isDev) {
             deleteButton = new JButton("Borrar Seleccionados");
